@@ -1,0 +1,6 @@
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+    <Application>
+        <Assembly Name="NPOI.OOXML" Dynamic="Required All"/>
+        <Assembly Name="NPOI.OpenXmlFormats" Dynamic="Required All"/>
+    </Application>
+</Directives>

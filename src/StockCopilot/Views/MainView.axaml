@@ -1,0 +1,254 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:StockCopilot.ViewModels"
+             xmlns:ma="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:ic="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:v="clr-namespace:StockCopilot.Views"
+             xmlns:as="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:m="clr-namespace:StockCopilot.Models"
+             xmlns:am="clr-namespace:StockCopilot.Abstractions.Models;assembly=StockCopilot.Abstractions"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="StockCopilot.Views.MainView"
+             x:DataType="vm:MainViewModel">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <ma:SnackbarHost HostName="MainSnackbarHost">
+        <ma:NavigationDrawer
+            LeftDrawerWidth="500"
+            LeftDrawerOpened="{Binding ElementName=NavDrawerSwitch, Path=IsChecked, Mode=TwoWay}">
+            <ma:NavigationDrawer.LeftDrawerContent>
+                <Grid
+                    ColumnDefinitions="*,*"
+                    IsSharedSizeScope="True">
+                    <Border
+                        Grid.Column="0"
+                        as:ShadowAssist.ShadowDepth="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="LeftDrawerContentHeader"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <ma:ColorZone
+                                Grid.Row="0"
+                                Mode="PrimaryMid">
+                                <TextBlock
+                                    Classes="Subtitle1"
+                                    Margin="8"
+                                    Text="可在此处添加多支参照股票（龙头股），选中之后可在右侧添加要对比的股票。"
+                                    TextWrapping="Wrap"/>
+                            </ma:ColorZone>
+
+                            <ListBox
+                                Grid.Row="1"
+                                ItemsSource="{Binding StockComparisionCollection}"
+                                SelectedItem="{Binding SelectedStockComparision, Mode=OneWayToSource}"
+                                SelectionMode="AlwaysSelected">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="m:StockComparision">
+                                        <Grid ColumnDefinitions="*,Auto,4,Auto">
+                                            <StackPanel
+                                                Grid.Column="0" Orientation="Vertical">
+                                                <TextBlock
+                                                    MaxWidth="140" TextTrimming="CharacterEllipsis"
+                                                    Text="{Binding TopStock.Name}"
+                                                    FontSize="18"/>
+                                                <TextBlock
+                                                    MaxWidth="140" TextTrimming="CharacterEllipsis"
+                                                    Text="{Binding TopStock.Code}"
+                                                    FontSize="16"/>
+                                            </StackPanel>
+
+                                            <Button 
+                                                Grid.Column="1"
+                                                Command="{Binding EditStock, RelativeSource={RelativeSource AncestorType=v:MainView}}"
+                                                CommandParameter="{Binding}">
+                                                <Viewbox
+                                                    Stretch="Fill"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch">
+                                                    <ic:MaterialIcon
+                                                        Kind="Edit" Width="16" Height="16"/>
+                                                </Viewbox>
+                                            </Button>
+                                            <Button
+                                                Grid.Column="3"
+                                                Command="{Binding RemoveStock, RelativeSource={RelativeSource AncestorType=v:MainView}}"
+                                                CommandParameter="{Binding}">
+                                                <Viewbox
+                                                    Stretch="Fill"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch">
+                                                    <ic:MaterialIcon
+                                                        Kind="Delete" Width="16" Height="16"/>
+                                                </Viewbox>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <ma:FloatingButton
+                                Grid.Row="1"
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                Margin="32"
+                                Command="{Binding AddTopStockCommand}">
+                                <Viewbox
+                                    Stretch="Fill"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                    <ic:MaterialIcon
+                                        Kind="Plus" Width="24" Height="24"/>
+                                </Viewbox>
+                            </ma:FloatingButton>
+                        </Grid>
+                    </Border>
+
+                    <Grid
+                        Column="1"
+                        IsEnabled="{Binding SelectedStockComparision, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" SharedSizeGroup="LeftDrawerContentHeader"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <ma:ColorZone
+                            Grid.Row="0"
+                            Mode="PrimaryLight">
+                            <TextBlock
+                                Classes="Subtitle1"
+                                Margin="8"
+                                Text="可在此处添加要对比的股票，选中后可在右侧查看详细数据。"
+                                TextWrapping="Wrap"/>
+                        </ma:ColorZone>
+
+                        <ListBox
+                            Grid.Row="1"
+                            ItemsSource="{Binding SelectedStockComparision.SecondaryStocks, FallbackValue={x:Null}}"
+                            SelectedItem="{Binding SelectedStockComparision.SelectedSecondaryStock, Mode=TwoWay, FallbackValue={x:Null}}"
+                            SelectionMode="AlwaysSelected">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="am:Stock">
+                                    <Grid ColumnDefinitions="*,Auto,4,Auto">
+                                        <StackPanel
+                                            Grid.Column="0" Orientation="Vertical">
+                                            <TextBlock
+                                                MaxWidth="140" TextTrimming="CharacterEllipsis"
+                                                Text="{Binding Name}"
+                                                FontSize="18"/>
+                                            <TextBlock
+                                                MaxWidth="140" TextTrimming="CharacterEllipsis"
+                                                Text="{Binding Code}"
+                                                FontSize="16"/>
+                                        </StackPanel>
+
+                                        <Button 
+                                            Grid.Column="1"
+                                            Command="{Binding EditStock, RelativeSource={RelativeSource AncestorType=v:MainView}}"
+                                            CommandParameter="{Binding}">
+                                            <Viewbox
+                                                Stretch="Fill"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch">
+                                                <ic:MaterialIcon
+                                                    Kind="Edit" Width="16" Height="16"/>
+                                            </Viewbox>
+                                        </Button>
+                                        <Button
+                                            Grid.Column="3"
+                                            Command="{Binding RemoveStock, RelativeSource={RelativeSource AncestorType=v:MainView}}"
+                                            CommandParameter="{Binding}">
+                                            <Viewbox
+                                                Stretch="Fill"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch">
+                                                <ic:MaterialIcon
+                                                    Kind="Delete" Width="16" Height="16"/>
+                                            </Viewbox>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ma:FloatingButton
+                            Grid.Row="1"
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                            Margin="32"
+                            Classes="Light"
+                            Command="{Binding AddSecondaryStockCommand}">
+                            <Viewbox
+                                Stretch="Fill"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                                <ic:MaterialIcon
+                                    Kind="Plus" Width="24" Height="24"/>
+                            </Viewbox>
+                        </ma:FloatingButton>
+                    </Grid>
+                </Grid>
+            </ma:NavigationDrawer.LeftDrawerContent>
+
+            <Grid RowDefinitions="Auto,*">
+                <ma:ColorZone
+                    Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                    Height="56" Mode="Accent" ZIndex="1">
+                    <Grid Margin="16" ColumnDefinitions="24,32,*,32,Auto,Auto,Auto">
+                        <ToggleButton
+                            Name="NavDrawerSwitch"
+                            Grid.Column="0" IsChecked="True"
+                            Width="32" Height="32" Padding="4">
+                            <ic:MaterialIcon Kind="Menu" Width="24" Height="24"/>
+                        </ToggleButton>
+                        <TextBlock
+                            Grid.Column="2" Classes="Headline6" Text="股票小助手"
+                            VerticalAlignment="Center"/>
+                        <ic:MaterialIcon
+                            Grid.Column="4"
+                            Kind="WhiteBalanceSunny" Width="24" Height="24"/>
+                        <ToggleSwitch
+                            Grid.Column="5" Margin="8,0"
+                            ToolTip.Tip="切换颜色模式"
+                            IsChecked="{Binding UseDarkMode, Mode=TwoWay}"/>
+                        <ic:MaterialIcon
+                            Grid.Column="6"
+                            Kind="WeatherNight" Width="24" Height="24"/>
+                        <!--<Menu Grid.Column="4" Height="32" Padding="0" Margin="0">
+                            <MenuItem Height="32" Width="32" Header="{ic:MaterialIconExt DotsVertical, Size=24}">
+                                <MenuItem Header="Hello!">
+                                    <MenuItem.Icon>
+                                        <ic:MaterialIcon Kind="Hand" Width="24" Height="24" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Connect to network">
+                                    <MenuItem.Icon>
+                                        <ic:MaterialIcon Kind="RocketLaunch" Width="24" Height="24" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="Action 1" />
+                                <MenuItem Header="Action 2" />
+                                <MenuItem Header="Action 3" />
+                                <Separator />
+                                <MenuItem Header="Goodbye">
+                                    <MenuItem.Icon>
+                                        <ic:MaterialIcon Kind="ExitRun" Width="24" Height="24" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                        </Menu>-->
+                    </Grid>
+                </ma:ColorZone>
+
+                <v:StockComparisionView
+                    Grid.Row="1"/>
+            </Grid>
+        </ma:NavigationDrawer>
+    </ma:SnackbarHost>
+</UserControl>

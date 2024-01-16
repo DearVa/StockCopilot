@@ -1,0 +1,62 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ct="using:StockCopilot.Views.Controls"
+        xmlns:vm="clr-namespace:StockCopilot.ViewModels"
+        xmlns:as="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        xmlns:at="clr-namespace:StockCopilot.Attaches">
+    <Design.PreviewWith>
+        <ct:StockSearchSuggestBox/>
+    </Design.PreviewWith>
+
+    <Style Selector="ct|StockSearchSuggestBox">
+        <Setter Property="Template">
+            <ControlTemplate 
+                x:DataType="vm:StockSearchSuggestBoxViewModel">
+                <Grid
+                    RowDefinitions="Auto,*">
+                    <TextBox
+                        Grid.Row="0"
+                        Text="{Binding SearchText, Mode=TwoWay}"
+                        Classes="filled dense" 
+                        Theme="{StaticResource FilledTextBox}" 
+                        as:TextFieldAssist.Label="输入股票代码、首字母或全名"
+                        at:FocusAttach.AutoFocus="True"/>
+                    <ListBox 
+                        Grid.Row="1" Grid.IsSharedSizeScope="True"
+                        ItemsSource="{Binding SearchSuggests}"
+                        SelectedItem="{Binding SelectedSearchSuggest, Mode=TwoWay}"
+                        SelectionMode="AlwaysSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" MaxWidth="240" SharedSizeGroup="SearchSuggests1"/>
+                                        <ColumnDefinition Width="Auto" MaxWidth="120" SharedSizeGroup="SearchSuggests2"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox
+                                        Grid.Column="0"
+                                        IsHitTestVisible="False"
+                                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}"/>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Text="{Binding ShortName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        FontSize="18"
+                                        ToolTip.Tip="{Binding ShortName}"/>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="16,0,0,0"
+                                        Text="{Binding RelatedCode}"
+                                        TextTrimming="CharacterEllipsis"
+                                        FontSize="16"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="StockCopilot/StockCopilot/App.axaml" value="StockCopilot/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="StockCopilot/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml" value="StockCopilot/StockCopilot.Desktop/StockCopilot.Desktop.csproj" />
+        <entry key="StockCopilot/StockCopilot/Views/MainView.axaml" value="StockCopilot/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="StockCopilot/StockCopilot/Views/MainWindow.axaml" value="StockCopilot/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="StockCopilot/StockCopilot/Views/StockComparisionView.axaml" value="StockCopilot/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="src/StockCopilot/App.axaml" value="src/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="src/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml" value="src/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="src/StockCopilot/Views/MainView.axaml" value="src/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="src/StockCopilot/Views/MainWindow.axaml" value="src/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+        <entry key="src/StockCopilot/Views/StockComparisionView.axaml" value="src/StockCopilot.Browser/StockCopilot.Browser.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

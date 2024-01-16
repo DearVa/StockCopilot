@@ -1,0 +1,283 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="using:StockCopilot.Views"
+        xmlns:vm="clr-namespace:StockCopilot.ViewModels"
+        xmlns:ic="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:m="clr-namespace:StockCopilot.Models"
+        xmlns:ma="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+        xmlns:ct="clr-namespace:StockCopilot.Views.Controls"
+        xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
+    <Design.PreviewWith>
+        <v:StockComparisionView/>
+    </Design.PreviewWith>
+    
+    <Style Selector="ComboBox.Filled">
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignTextFieldBoxBackground}" />
+        <Setter Property="ContextFlyout" Value="{StaticResource DefaultTextBoxMenuFlyout}" />
+        <Setter Property="FontFamily" Value="avares://Material.Styles/Fonts/Roboto#Roboto" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <ToggleButton Classes="NoFeedback TransparentBack"
+                                  MinHeight="48" BorderThickness="0"
+                                  HorizontalContentAlignment="Stretch"
+                                  IsChecked="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                  Margin="4,0"
+                                  CornerRadius="4,4,0,0"
+                                  Padding="0">
+                        <Border Name="border"
+                                MinHeight="48"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border.Styles>
+                                <Style Selector="Border:disabled, TextBlock:disabled">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Style>
+                            </Border.Styles>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock Name="floatingWatermark"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Stretch"
+                                           Classes="Subtitle1"
+                                           Foreground="{DynamicResource ThemeAccentBrush}"
+                                           FontSize="{DynamicResource FontSizeSmall}"
+                                           Text="{TemplateBinding PlaceholderText}"
+                                           RenderTransformOrigin="0, 0">
+                                    <TextBlock.Styles>
+                                        <Style Selector="TextBlock#floatingWatermark:not(.no-transitions)">
+                                            <Setter Property="Transitions">
+                                                <Transitions>
+                                                    <ThicknessTransition Duration="0:0:0.25" Property="Margin"
+                                                                         Easing="CubicEaseOut" />
+                                                    <TransformOperationsTransition Property="RenderTransform"
+                                                        Duration="0:0:0.25" Easing="CubicEaseOut" />
+                                                </Transitions>
+                                            </Setter>
+                                        </Style>
+                                    </TextBlock.Styles>
+                                </TextBlock>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ContentPresenter Name="contentPresenter"
+                                                      BorderThickness="0" BorderBrush="Transparent"
+                                                      HorizontalAlignment="Left"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                      Margin="{TemplateBinding Padding}" />
+                                    <Border Name="splitBorder"
+                                            Grid.Column="1"
+                                            Margin="16"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0">
+                                        <Path Name="arrow"
+                                              Width="8" Height="8"
+                                              Stretch="Uniform"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Data="M7,10L12,15L17,10H7Z"
+                                              Fill="{DynamicResource MaterialDesignTextBoxBorder}" />
+                                    </Border>
+                                </Grid>
+                                <ma:MaterialUnderline Classes="MirrorY"
+                                                          VerticalAlignment="Bottom"
+                                                          Name="Underline">
+                                    <ma:MaterialUnderline.Styles>
+                                        <Style
+                                            Selector="ComboBox.Filled[IsDropDownOpen=true] /template/ ma|MaterialUnderline#Underline,
+                                     ComboBox.Filled:pointerover /template/ ma|MaterialUnderline#Underline">
+                                            <Setter Property="IsActive" Value="True" />
+                                        </Style>
+                                    </ma:MaterialUnderline.Styles>
+                                </ma:MaterialUnderline>
+                            </Grid>
+                        </Border>
+                    </ToggleButton>
+                    <Popup Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                           MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                           VerticalOffset="0"
+                           Margin="0"
+                           WindowManagerAddShadowHint="False"
+                           PlacementTarget="{ReflectionBinding ElementName=templateRoot}"
+                           IsLightDismissEnabled="True"
+                           UseLayoutRounding="True"
+                           ClipToBounds="False">
+                        <ma:Card assists:ShadowAssist.ShadowDepth="Depth1"
+                                 Margin="4,0,4,4"
+                                 CornerRadius="0,0,8,8"
+                                 Padding="0">
+                            <ScrollViewer Background="{ReflectionBinding Background, ElementName=PART_Popup}"
+                                          MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                          MinHeight="1">
+                              <ItemsPresenter Name="PART_ItemsPresenter"
+                                              ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            </ScrollViewer>
+                        </ma:Card>
+                    </Popup>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="v|StockComparisionView">
+        <Setter Property="Template">
+            <ControlTemplate
+                x:DataType="vm:StockComparisionViewModel">
+                <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+                    <ma:ColorZone
+                        Grid.Row="0">
+
+                    </ma:ColorZone>
+
+                    <Grid
+                        Row="1"
+                        ColumnDefinitions="*,Auto">
+
+                        <ma:Card
+                            Grid.Column="0"
+                            Padding="0" Margin="16,8"
+                            HorizontalAlignment="Left" InsideClipping="True">
+                            <ma:Card.Styles>
+                                <Style Selector="RadioButton">
+                                    <Setter Property="Theme" Value="{StaticResource RadioButton}"/>
+                                </Style>
+                            </ma:Card.Styles>
+
+                            <ListBox
+                                ItemsSource="{x:Static m:StockComparision.KLineIntervals}"
+                                SelectedIndex="{Binding StockComparision.SelectedKLineIntervalIndex, FallbackValue=0}"
+                                IsEnabled="{Binding StockComparision, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                SelectionMode="AlwaysSelected">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="m:SelectableKLineInterval">
+                                        <RadioButton
+                                            Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=v:MainWindow}}"
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}"
+                                            IsHitTestVisible="False"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </ma:Card>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="8,0"
+                            Orientation="Horizontal">
+                            <DatePicker
+                                Margin="8"
+                                SelectedDate="{Binding StockComparision.BeginDateTime, FallbackValue={x:Null}}"
+                                IsEnabled="{Binding StockComparision, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                            <TextBlock
+                                VerticalAlignment="Center" Text="-"/>
+                            <DatePicker
+                                Margin="8"
+                                SelectedDate="{Binding StockComparision.EndDateTime, FallbackValue={x:Null}}"
+                                IsEnabled="{Binding StockComparision, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Border
+                        Grid.Row="2"
+                        Margin="16,0"
+                        CornerRadius="8"
+                        Background="#11000000">
+                        <ct:KLineBarPlot
+                            Margin="4"
+                            Background="Transparent"
+                            Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=v:MainWindow}}"
+                            ClipToBounds="True"
+                            BarItems="{Binding KLineBarItems}"/>
+                    </Border>
+
+                    <Grid
+                        Row="3"
+                        ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="16,0,8,0"
+                            VerticalAlignment="Center"
+                            Text="可视化数据"/>
+                        <ComboBox
+                            Grid.Column="1"
+                            Classes="Filled"
+                            Margin="0,16"
+                            VerticalAlignment="Center"
+                            ItemsSource="{x:Static vm:StockComparisionViewModel.StockDataRetrievers}"
+                            SelectedIndex="{Binding SelectedStockDataRetrieverIndex, Mode=TwoWay}"/>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            Margin="16,0,8,0"
+                            VerticalAlignment="Center"
+                            Text="可视化方式"/>
+                        <ComboBox
+                            Grid.Column="3"
+                            Classes="Filled"
+                            VerticalAlignment="Center"
+                            Margin="0,16"
+                            ItemsSource="{x:Static vm:StockComparisionViewModel.StockComparisionModes}"
+                            SelectedIndex="{Binding SelectedStockComparisionModeIndex, Mode=TwoWay}"/>
+                        <Border
+                            Grid.Column="4"
+                            Margin="4,0,0,0"
+                            Background="Transparent">
+                            <ic:MaterialIcon
+                                Kind="QuestionMarkCircleOutline"
+                                Width="24" Height="24"/>
+                            <ToolTip.Tip>
+                                <TextBlock>
+                                    <Run Text="绝对值：直接用对比股减去参照股，不考虑走势"/>
+                                    <LineBreak/>
+                                    <Run Text="不同走势：只显示相对股的走势和参照股走势不同的数值"/>
+                                    <LineBreak/>
+                                    <Run Text="不同走势（红）：只显示相对股数值为正数，参照股数值为负数的情况"/>
+                                    <LineBreak/>
+                                    <Run Text="不同走势（绿）：只显示相对股数值为负数，参照股数值为正数的情况"/>
+                                </TextBlock>
+                            </ToolTip.Tip>
+                        </Border>
+                        
+                        <ma:FloatingButton
+                            Grid.Column="5"
+                            Margin="16"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            IsExtended="True"
+                            Command="{Binding ExportDataCommand}">
+                            <StackPanel
+                                Orientation="Horizontal" Height="24">
+                                <Viewbox
+                                    Margin="4,0,0,0"
+                                    Stretch="Fill"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                    <ic:MaterialIcon
+                                        Kind="Export"
+                                        Width="24" Height="24"/>
+                                </Viewbox>
+                                <TextBlock
+                                    Margin="8,0"
+                                    Classes="Subtitle2"
+                                    VerticalAlignment="Center"
+                                    Text="导出数据"/>
+                            </StackPanel>
+                        </ma:FloatingButton>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

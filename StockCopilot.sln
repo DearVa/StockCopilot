@@ -1,12 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Windows", "StockCopilot.Windows\StockCopilot.Windows.csproj", "{68B96D44-2AEE-44B0-BF3A-5EF6F0D0EB32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Abstractions", "src\StockCopilot.Abstractions\StockCopilot.Abstractions.csproj", "{6970F98B-9A9B-414B-B4C6-71A1D5EE6A1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Abstractions", "StockCopilot.Abstractions\StockCopilot.Abstractions.csproj", "{6970F98B-9A9B-414B-B4C6-71A1D5EE6A1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Core", "src\StockCopilot.Core\StockCopilot.Core.csproj", "{6004E2F6-94E6-448A-A52D-C35A19C216B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Core", "StockCopilot.Core\StockCopilot.Core.csproj", "{6004E2F6-94E6-448A-A52D-C35A19C216B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Core.Tests", "src\StockCopilot.Core.Tests\StockCopilot.Core.Tests.csproj", "{156295AB-5582-4935-BBD4-B1B56D4031C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Core.Tests", "StockCopilot.Core.Tests\StockCopilot.Core.Tests.csproj", "{156295AB-5582-4935-BBD4-B1B56D4031C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot", "src\StockCopilot\StockCopilot.csproj", "{7EA9617C-96C3-4A33-B884-DEE5305383EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Android", "src\StockCopilot.Android\StockCopilot.Android.csproj", "{7AA8D1DF-8B2B-4310-883E-E18235EC9237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Desktop", "src\StockCopilot.Desktop\StockCopilot.Desktop.csproj", "{EB6857BE-5FA2-4C35-B735-D5DBA7157EB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.iOS", "src\StockCopilot.iOS\StockCopilot.iOS.csproj", "{974A1C77-E815-4F10-8BD2-21B1B879C035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockCopilot.Browser", "src\StockCopilot.Browser\StockCopilot.Browser.csproj", "{90BD90D6-B6E9-42E8-B00E-33CB681DE1A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{68B96D44-2AEE-44B0-BF3A-5EF6F0D0EB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68B96D44-2AEE-44B0-BF3A-5EF6F0D0EB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68B96D44-2AEE-44B0-BF3A-5EF6F0D0EB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68B96D44-2AEE-44B0-BF3A-5EF6F0D0EB32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6970F98B-9A9B-414B-B4C6-71A1D5EE6A1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6970F98B-9A9B-414B-B4C6-71A1D5EE6A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6970F98B-9A9B-414B-B4C6-71A1D5EE6A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +34,25 @@ Global
 		{156295AB-5582-4935-BBD4-B1B56D4031C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{156295AB-5582-4935-BBD4-B1B56D4031C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{156295AB-5582-4935-BBD4-B1B56D4031C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA9617C-96C3-4A33-B884-DEE5305383EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA9617C-96C3-4A33-B884-DEE5305383EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA9617C-96C3-4A33-B884-DEE5305383EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA9617C-96C3-4A33-B884-DEE5305383EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA8D1DF-8B2B-4310-883E-E18235EC9237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA8D1DF-8B2B-4310-883E-E18235EC9237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA8D1DF-8B2B-4310-883E-E18235EC9237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA8D1DF-8B2B-4310-883E-E18235EC9237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6857BE-5FA2-4C35-B735-D5DBA7157EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6857BE-5FA2-4C35-B735-D5DBA7157EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6857BE-5FA2-4C35-B735-D5DBA7157EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6857BE-5FA2-4C35-B735-D5DBA7157EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974A1C77-E815-4F10-8BD2-21B1B879C035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974A1C77-E815-4F10-8BD2-21B1B879C035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974A1C77-E815-4F10-8BD2-21B1B879C035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974A1C77-E815-4F10-8BD2-21B1B879C035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90BD90D6-B6E9-42E8-B00E-33CB681DE1A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90BD90D6-B6E9-42E8-B00E-33CB681DE1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90BD90D6-B6E9-42E8-B00E-33CB681DE1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90BD90D6-B6E9-42E8-B00E-33CB681DE1A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
