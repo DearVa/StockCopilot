@@ -33,6 +33,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto" MaxWidth="240" SharedSizeGroup="SearchSuggests1"/>
                                         <ColumnDefinition Width="Auto" MaxWidth="120" SharedSizeGroup="SearchSuggests2"/>
+                                        <ColumnDefinition Width="Auto" MaxWidth="120" SharedSizeGroup="SearchSuggests3"/>
                                     </Grid.ColumnDefinitions>
                                     <CheckBox
                                         Grid.Column="0"
@@ -41,16 +42,25 @@
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="8,0,0,0"
-                                        Text="{Binding ShortName}"
+                                        Text="{Binding Name}"
                                         TextTrimming="CharacterEllipsis"
                                         FontSize="18"
-                                        ToolTip.Tip="{Binding ShortName}"/>
+                                        VerticalAlignment="Center"
+                                        ToolTip.Tip="{Binding Name}"/>
                                     <TextBlock
                                         Grid.Column="2"
                                         Margin="16,0,0,0"
-                                        Text="{Binding RelatedCode}"
+                                        Text="{Binding Code}"
                                         TextTrimming="CharacterEllipsis"
-                                        FontSize="16"/>
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Margin="8,0,0,0"
+                                        Text="{Binding SecurityTypeName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

@@ -16,7 +16,7 @@ public static partial class Program
     {
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_OnUnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_OnUnobservedTaskException;
-        
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 

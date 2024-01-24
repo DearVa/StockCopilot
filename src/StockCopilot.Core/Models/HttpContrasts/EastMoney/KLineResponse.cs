@@ -10,12 +10,6 @@ internal record KLineResponse
 
     public record InternalData
     {
-        [JsonPropertyName("code")] public string? Code { get; init; }
-
-        [JsonPropertyName("market")] public int Market { get; init; }
-
-        [JsonPropertyName("name")] public string? Name { get; init; }
-
         [JsonPropertyName("klines")] public KLine[]? KLines { get; init; }
     }
 }

@@ -21,6 +21,7 @@ public class EastMoneyKLinesDataSource(IConfiguration configuration) : IKLinesDa
     private const string ErrorString = "Network error or Unsupported market";
 
     public async ValueTask<IReadOnlyList<KLine>> GetKLinesAsync(
+        string market,
         string code,
         DateTime begin,
         DateTime end,
@@ -28,20 +29,6 @@ public class EastMoneyKLinesDataSource(IConfiguration configuration) : IKLinesDa
         AdjustmentType adjustmentType = AdjustmentType.None)
     {
         var baseUrl = configuration.GetSection(nameof(EastMoneyKLinesDataSource))["BaseUrl"] ?? DefaultBaseUrl;
-        string market;
-        if (code.StartsWith('0'))
-        {
-            market = "0";
-        }
-        else if (code.StartsWith("hk"))
-        {
-            market = "106";
-            code = code[2..];
-        }
-        else
-        {
-            market = "1";
-        }
         var urlBuilder = new StringBuilder(baseUrl)
             .Append("?fqt=").Append(adjustmentType switch
             {
@@ -68,10 +55,9 @@ public class EastMoneyKLinesDataSource(IConfiguration configuration) : IKLinesDa
         var response = await httpClient.GetAsync(urlBuilder.ToString());
         response.EnsureSuccessStatusCode();
         await using var stream = await response.Content.ReadAsStreamAsync();
-        var kLineResponse = (await JsonSerializer.DeserializeAsync(
+        var kLineResponse = await JsonSerializer.DeserializeAsync(
             stream,
-            typeof(KLineResponse),
-            EasyMoneyJsonSerializerContext.Default)).NotNull<KLineResponse>();
-        return kLineResponse.Data.NotNull(ErrorString).KLines.NotNull(ErrorString);
+            EasyMoneyJsonSerializerContext.Default.KLineResponse);
+        return kLineResponse.NotNull().Data.NotNull(ErrorString).KLines.NotNull(ErrorString);
     }
 }

@@ -2,9 +2,7 @@ using System.Text;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-#if DEBUG
 using HotAvalonia;
-#endif
 using Material.Styles.Themes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,9 +20,7 @@ public class App : Application
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-#if DEBUG
         this.EnableHotReload();
-#endif
 
         AvaloniaXamlLoader.Load(this);
 

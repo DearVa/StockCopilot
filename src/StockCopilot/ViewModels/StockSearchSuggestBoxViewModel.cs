@@ -27,9 +27,9 @@ public partial class StockSearchSuggestBoxViewModel(IStockSearchSuggestProvider 
 
     private string? searchText;
 
-    public ObservableCollection<StockSearchSuggest> SearchSuggests { get; } = [];
+    public ObservableCollection<Stock> SearchSuggests { get; } = [];
 
-    [ObservableProperty] private StockSearchSuggest? selectedSearchSuggest;
+    [ObservableProperty] private Stock? selectedSearchSuggest;
 
     private CancellationTokenSource? cancellationTokenSource;
 

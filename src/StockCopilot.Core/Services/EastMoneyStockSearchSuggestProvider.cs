@@ -1,10 +1,8 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using StockCopilot.Abstractions.Extensions;
 using StockCopilot.Abstractions.Interfaces;
 using StockCopilot.Abstractions.Models;
 using StockCopilot.Core.JsonSerializerContexts;
-using StockCopilot.Core.Models.HttpContrasts.EastMoney;
 
 namespace StockCopilot.Core.Services;
 
@@ -12,18 +10,18 @@ public class EastMoneyStockSearchSuggestProvider : IStockSearchSuggestProvider
 {
     private readonly HttpClient httpClient = new();
 
-    private const string DefaultBaseUrl = "https://searchadapter.eastmoney.com/api/suggest/get";
+    private const string DefaultBaseUrl = "https://search-codetable.eastmoney.com/codetable/search/web";
 
-    public async ValueTask<IReadOnlyList<StockSearchSuggest>> GetSearchSuggestsAsync(string searchText, int count)
+    public async ValueTask<IReadOnlyList<Stock>> GetSearchSuggestsAsync(string searchText, int count)
     {
-        var url = $"{DefaultBaseUrl}?input={searchText}&type=8&count={count}";
+        var url = $"{DefaultBaseUrl}?keyword={searchText}&pageIndex=1&pageSize={count}";
         var responseMessage = await httpClient.GetAsync(url);
         responseMessage.EnsureSuccessStatusCode();
         await using var stream = await responseMessage.Content.ReadAsStreamAsync();
-        var response = (await JsonSerializer.DeserializeAsync(
+        var response = await JsonSerializer.DeserializeAsync(
             stream,
-            typeof(GetSearchSuggestsResponse),
-            EasyMoneyJsonSerializerContext.Default)).NotNull<GetSearchSuggestsResponse>();
-        return response.GubaCodeTable.NotNull().Data;
+            EasyMoneyJsonSerializerContext.Default.SearchSuggestResponse);
+        return response.NotNull().Result.Select(r => new Stock(
+            r.Code, r.ShortName, r.Market.ToString(), r.Pinyin, r.SecurityTypeName)).ToArray();
     }
 }

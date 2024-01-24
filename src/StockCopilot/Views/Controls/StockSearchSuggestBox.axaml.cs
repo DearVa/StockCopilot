@@ -7,13 +7,13 @@ namespace StockCopilot.Views.Controls;
 
 public class StockSearchSuggestBox : TemplatedControl
 {
-    public StockSearchSuggest? SelectedStockSearchSuggest =>
-        ((StockSearchSuggestBoxViewModel?)DataContext)?.SelectedSearchSuggest;
+    public Stock? SelectedStockSearchSuggest => viewModel.SelectedSearchSuggest;
+
+    private readonly StockSearchSuggestBoxViewModel viewModel;
     
     public StockSearchSuggestBox(string? searchText = null)
     {
-        var viewModel = ServiceLocator.Resolve<StockSearchSuggestBoxViewModel>();
-        DataContext = viewModel;
+        DataContext = viewModel = ServiceLocator.Resolve<StockSearchSuggestBoxViewModel>();
         viewModel.SearchText = searchText;
     }
 }

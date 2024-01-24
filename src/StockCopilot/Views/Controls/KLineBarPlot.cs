@@ -147,7 +147,7 @@ public sealed class KLineBarPlot : Canvas
 
         var (pl, pt, pr, pb) = Padding;
         var (startIndex, endIndex) = ((int)Math.Floor(XRange.Start), (int)Math.Floor(XRange.End));
-        var actualBarCount = Math.Min(endIndex - startIndex, barItems.Count);
+        var actualBarCount = endIndex - startIndex + 1;
         var actualBarTotalWidth = (finalSize.Width - pl - pr) / XRange.Span;
         var actualBarWidth = actualBarTotalWidth * BarWidth / (BarWidth + BarMargin);
 
@@ -168,7 +168,7 @@ public sealed class KLineBarPlot : Canvas
                 barLine = barLines[i];
             }
 
-            if (i + startIndex >= 0 && i + startIndex < barItems.Count - 1)
+            if (i + startIndex >= 0 && i + startIndex < barItems.Count)
             {
                 var xPos = startXPos + (i + 0.5d) * actualBarTotalWidth;
                 var barItem = barItems[i + startIndex];
@@ -257,7 +257,6 @@ public sealed class KLineBarPlot : Canvas
         var (pl, pt, pr, pb) = Padding;
         var startIndex = (int)Math.Floor(XRange.Start);
         var actualBarTotalWidth = (Bounds.Width - pl - pr) / XRange.Span;
-        var actualBarWidth = actualBarTotalWidth * BarWidth / (BarWidth + BarMargin);
 
         var startXPos = (startIndex - XRange.Start) * actualBarTotalWidth + pl;
         var index = (int)Math.Floor((pointerPoint.X - startXPos) / actualBarTotalWidth) + startIndex;
@@ -341,7 +340,8 @@ public sealed class KLineBarPlot : Canvas
                 break;
             }
         }
-        
+
+        span = end - start;
         if (start < -BarWidth)
         {
             start = -BarWidth;

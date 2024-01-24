@@ -1,5 +1,5 @@
 using Avalonia.Controls;
-using StockCopilot.Abstractions.Models;
+using DynamicData;
 using StockCopilot.Core;
 using StockCopilot.Models;
 using StockCopilot.ViewModels;
@@ -26,12 +26,11 @@ public partial class MainView : UserControl
                 stockComparision.TopStock = newStock;
                 break;
             }
-            case Stock stock when selectedStockComparision.SelectedSecondaryStock != null:
+            case SelectableStock stock:
             {
-                var newStock = await MainViewModel.EditStock("编辑对比股", stock.Code);
+                var newStock = await MainViewModel.EditStock("编辑对比股", stock.Data.Code);
                 if (newStock == null) return;
-                selectedStockComparision.SecondaryStocks[selectedStockComparision.SelectedSecondaryStockIndex] = newStock;
-                selectedStockComparision.SelectedSecondaryStock = newStock;
+                selectedStockComparision.SecondaryStocks.Replace(stock, new SelectableStock(newStock.Name, newStock));
                 break;
             }
         }
@@ -47,11 +46,16 @@ public partial class MainView : UserControl
                 viewModel.StockComparisionCollection.Remove(stockComparision);
                 break;
             }
-            case Stock stock when viewModel.SelectedStockComparision != null:
+            case SelectableStock stock when viewModel.SelectedStockComparision != null:
             {
                 viewModel.SelectedStockComparision.SecondaryStocks.Remove(stock);
                 break;
             }
         }
+    }
+
+    private void SelectingItemsControl_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        ServiceLocator.Resolve<StockComparisionViewModel>().UpdatePlot();
     }
 }

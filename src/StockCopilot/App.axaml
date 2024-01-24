@@ -11,8 +11,37 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
+    
+    <Application.Resources>
+        <FontFamily x:Key="FontFamily">宋体,Simsun,微软雅黑,Microsoft YaHei,苹方-简,宋体-简</FontFamily>
+    </Application.Resources>
 
     <Application.Styles>
+        <Style Selector="InputElement">
+            <Setter Property="TextBlock.FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="RadioButton">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        <Style Selector="CheckBox">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamily}"/>
+        </Style>
+        
         <t:MaterialTheme BaseTheme="Light" PrimaryColor="Purple" SecondaryColor="Indigo"/>
         <ic:MaterialIconStyles/>
         <di:DialogHostStyles/>

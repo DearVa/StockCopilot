@@ -14,25 +14,7 @@ public class StockComparision(Stock topStock) : ObservableObject
         set => SetProperty(ref topStock, value);
     }
 
-    public ObservableCollection<Stock> SecondaryStocks { get; init; } = [];
-
-    public int SelectedSecondaryStockIndex { get; set; }
-
-    [JsonIgnore]
-    public Stock? SelectedSecondaryStock
-    {
-        get => selectedSecondaryStock;
-        set
-        {
-            if (selectedSecondaryStock == value) return;
-            OnPropertyChanging();
-            selectedSecondaryStock = value;
-            SelectedSecondaryStockIndex = value == null ? -1 : SecondaryStocks.IndexOf(value);
-            OnPropertyChanged();
-        }
-    }
-
-    private Stock? selectedSecondaryStock;
+    public ObservableCollection<SelectableStock> SecondaryStocks { get; init; } = [];
 
     public static SelectableKLineInterval[] KLineIntervals { get; } =
     [
@@ -55,7 +37,7 @@ public class StockComparision(Stock topStock) : ObservableObject
 
     [JsonIgnore]
     public TimeSpan SelectedKLineInterval =>
-        SelectedSecondaryStockIndex >= 0 && SelectedSecondaryStockIndex < SecondaryStocks.Count
+        SelectedKLineIntervalIndex >= 0 && SelectedKLineIntervalIndex < SecondaryStocks.Count
             ? KLineIntervals[SelectedKLineIntervalIndex].Data
             : TimeSpan.FromDays(1);
 

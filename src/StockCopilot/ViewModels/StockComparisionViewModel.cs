@@ -16,6 +16,7 @@ using NPOI.SS.Util;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
 using StockCopilot.Abstractions.Interfaces;
+using StockCopilot.Abstractions.Models;
 using StockCopilot.Models;
 using StockCopilot.Views;
 
@@ -50,26 +51,25 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
 
     public static StockDataRetriever[] StockDataRetrievers { get; } =
     [
-        new StockDataRetriever("开盘", k => k.Opening),
-        new StockDataRetriever("收盘", k => k.Closing),
-        new StockDataRetriever("最高", k => k.Highest),
-        new StockDataRetriever("最低", k => k.Lowest),
-        new StockDataRetriever("成交量", k => k.Volume),
-        new StockDataRetriever("成交额", k => k.Turnover),
-        new StockDataRetriever("振幅", k => k.Amplitude),
-        new StockDataRetriever("涨跌幅", k => k.PriceChangePercentage),
-        new StockDataRetriever("涨跌额", k => k.PriceChangeAmount),
-        new StockDataRetriever("换手率", k => k.TurnoverRate)
+        new StockDataRetriever("今开", (k => k.Opening, (k, v) => k.Opening = v)),
+        new StockDataRetriever("昨收", (k => k.Closing, (k, v) => k.Closing = v)),
+        new StockDataRetriever("最高", (k => k.Highest, (k, v) => k.Highest = v)),
+        new StockDataRetriever("最低", (k => k.Lowest, (k, v) => k.Lowest = v)),
+        new StockDataRetriever("成交量", (k => k.Volume, (k, v) => k.Volume = v)),
+        new StockDataRetriever("成交额", (k => k.Amplitude, (k, v) => k.Amplitude = v)),
+        new StockDataRetriever("涨跌幅", (k => k.PriceChangePercentage, (k, v) => k.PriceChangePercentage = v)),
+        new StockDataRetriever("涨跌额", (k => k.PriceChangeAmount, (k, v) => k.PriceChangeAmount = v)),
+        new StockDataRetriever("换手", (k => k.TurnoverRate, (k, v) => k.TurnoverRate = v))
     ];
 
     [ObservableProperty] private int selectedStockDataRetrieverIndex = 7;
 
     public static StockComparisionMode[] StockComparisionModes { get; } =
     [
-        new StockComparisionMode("绝对值", (x, y) => x - y),
-        new StockComparisionMode("不同走势", (x, y) => Math.Sign(x) == Math.Sign(y) ? 0 : x - y),
-        new StockComparisionMode("不同走势（红）", (x, y) => x >= 0 && y <= 0 ? x - y : 0),
-        new StockComparisionMode("不同走势（绿）", (x, y) => x <= 0 && y >= 0 ? x - y : 0),
+        new StockComparisionMode("所有", (_, y) => y),
+        new StockComparisionMode("不同走势", (x, y) => (x >= 0 && y > 0) || (x <= 0 && y < 0) ? y : 0),
+        new StockComparisionMode("不同走势（红）", (x, y) => x <= 0 && y > 0 ? y : 0),
+        new StockComparisionMode("不同走势（绿）", (x, y) => x >= 0 && y < 0 ? y : 0),
     ];
 
     [ObservableProperty] private int selectedStockComparisionModeIndex = 2;
@@ -82,21 +82,7 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
             case nameof(SelectedStockDataRetrieverIndex):
             case nameof(SelectedStockComparisionModeIndex):
             {
-                if (KLineBarItems.Count == 0) break;
-
-                var dataRetriever = StockDataRetrievers[Math.Clamp(
-                    SelectedStockDataRetrieverIndex, 0, StockDataRetrievers.Length - 1)];
-                var comparisionMode = StockComparisionModes[Math.Clamp(
-                    SelectedStockComparisionModeIndex, 0, StockComparisionModes.Length - 1)];
-                foreach (var kLineBarItem in KLineBarItems.Where(i => i.SecondaryKLine != null))
-                {
-                    kLineBarItem.Value = (double)comparisionMode.Data(
-                        dataRetriever.Data(kLineBarItem.TopKLine),
-                        dataRetriever.Data(kLineBarItem.SecondaryKLine!));
-                }
-
-                // Raise KLineBarItems Update
-                KLineBarItems.Move(KLineBarItems.Count - 1, KLineBarItems.Count - 1);
+                UpdateKLineBarItems();
                 break;
             }
         }
@@ -117,21 +103,24 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
         };
     }
 
-    private async void UpdatePlot()
+    public async void UpdatePlot()
     {
         if (StockComparision == null) return;
 
-        var code1 = StockComparision.TopStock.Code;
-        var code2 = StockComparision.SelectedSecondaryStock?.Code;
-
         await ExecuteBusyAction(() => UpdateAllPlotsInternal(
-            code1,
-            code2,
+            StockComparision.TopStock,
+            StockComparision.SecondaryStocks
+                .Where(s => s.IsSelected)
+                .Select(s => s.Data).ToArray(),
             StockComparision.BeginDateTime.LocalDateTime,
             StockComparision.EndDateTime.LocalDateTime,
             StockComparision.SelectedKLineInterval));
 
-        async Task UpdateAllPlotsInternal(string topCode, string? secondaryCode, DateTime begin, DateTime end,
+        async Task UpdateAllPlotsInternal(
+            Stock top,
+            IReadOnlyList<Stock> secondaryStocks,
+            DateTime begin, 
+            DateTime end,
             TimeSpan interval)
         {
             try
@@ -139,50 +128,73 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
                 KLineBarItems.Clear();
 
                 var topKLines = await kLinesDataSource.GetKLinesAsync(
-                    topCode, begin, end, interval);
+                    top.Market, top.Code, begin, end, interval);
 
                 var dateTimeFormatString = GetDateTimeFormatString(interval);
 
-                if (secondaryCode != null)
-                {
-                    var secondaryKLines = await kLinesDataSource.GetKLinesAsync(
-                        secondaryCode, begin, end, interval);
-
-                    var dataRetriever = StockDataRetrievers[Math.Clamp(
-                        SelectedStockDataRetrieverIndex, 0, StockDataRetrievers.Length - 1)];
-                    var comparisionMode = StockComparisionModes[Math.Clamp(
-                        SelectedStockComparisionModeIndex, 0, StockComparisionModes.Length - 1)];
-
-                    var i = 0;
-                    foreach (var topKLine in topKLines)
-                    {
-                        while (i < secondaryKLines.Count && secondaryKLines[i].DateTime < topKLine.DateTime)
-                        {
-                            i++;
-                        }
-
-                        if (i >= secondaryKLines.Count || secondaryKLines[i].DateTime > topKLine.DateTime)
-                        {
-                            KLineBarItems.Add(new KLineBarItem(topKLine, null, dateTimeFormatString));
-                        }
-                        else
-                        {
-                            KLineBarItems.Add(new KLineBarItem(topKLine, secondaryKLines[i], dateTimeFormatString)
-                            {
-                                Value = (double)comparisionMode.Data(
-                                    dataRetriever.Data(secondaryKLines[i]),
-                                    dataRetriever.Data(topKLine))
-                            });
-                        }
-                    }
-                }
-                else
+                if (secondaryStocks.Count == 0)
                 {
                     foreach (var topKLine in topKLines)
                     {
                         KLineBarItems.Add(new KLineBarItem(topKLine, null, dateTimeFormatString));
                     }
+                    
+                    return;
                 }
+                
+                var secondaryKLinesList = new IReadOnlyList<KLine>[secondaryStocks.Count];
+                for (var i = 0; i < secondaryStocks.Count; i++)
+                {
+                    await Task.Delay(500);
+                    secondaryKLinesList[i] = await kLinesDataSource.GetKLinesAsync(
+                        secondaryStocks[i].Market, secondaryStocks[i].Code, begin, end, interval);
+                }
+
+                foreach (var topKLine in topKLines)
+                {
+                    var line = topKLine;
+                    var secondaryKLines = secondaryKLinesList
+                        .SelectMany(k => k)
+                        .Where(k => k.DateTime == line.DateTime)
+                        .ToList();
+                    
+                    if (secondaryKLines.Count != secondaryStocks.Count)
+                    {
+                        KLineBarItems.Add(new KLineBarItem(topKLine, null, dateTimeFormatString));
+                        continue;
+                    }
+
+                    if (secondaryKLines.Count == 1)
+                    {
+                        KLineBarItems.Add(new KLineBarItem(topKLine, secondaryKLines[0], dateTimeFormatString));
+                        continue;
+                    }
+
+                    var kLine = new KLine();
+                    foreach (var dataRetriever in StockDataRetrievers)
+                    {
+                        if (secondaryKLines.All(k => dataRetriever.Data.Getter(k) == 0))
+                        {
+                            dataRetriever.Data.Setter(kLine, 0);
+                        }
+                        else if (secondaryKLines.All(k => dataRetriever.Data.Getter(k) >= 0))
+                        {
+                            dataRetriever.Data.Setter(kLine, 1);
+                        }
+                        else if (secondaryKLines.All(k => dataRetriever.Data.Getter(k) <= 0))
+                        {
+                            dataRetriever.Data.Setter(kLine, -1);
+                        }
+                        else
+                        {
+                            dataRetriever.Data.Setter(kLine, 0);
+                        }
+                    }
+                    
+                    KLineBarItems.Add(new KLineBarItem(topKLine, kLine, dateTimeFormatString));
+                }
+
+                UpdateKLineBarItems();
             }
             catch (Exception e)
             {
@@ -193,19 +205,45 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
         }
     }
 
+    private void UpdateKLineBarItems()
+    {
+        if (KLineBarItems.Count == 0 || StockComparision == null) return;
+
+        var dataRetriever = StockDataRetrievers[Math.Clamp(
+            SelectedStockDataRetrieverIndex, 0, StockDataRetrievers.Length - 1)];
+        var comparisionMode = StockComparisionModes[Math.Clamp(
+            SelectedStockComparisionModeIndex, 0, StockComparisionModes.Length - 1)];
+        foreach (var kLineBarItem in KLineBarItems)
+        {
+            if (kLineBarItem.SecondaryKLine == null)
+            {
+                kLineBarItem.Value = 0d;
+            }
+            else
+            {
+                kLineBarItem.Value = (double)comparisionMode.Data(
+                    dataRetriever.Data.Getter(kLineBarItem.TopKLine),
+                    dataRetriever.Data.Getter(kLineBarItem.SecondaryKLine));
+            }
+        }
+
+        // Raise KLineBarItems Update
+        KLineBarItems.Move(KLineBarItems.Count - 1, KLineBarItems.Count - 1);
+    }
+
     [RelayCommand]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(SharedStringsTable))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(StylesTable))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(List<CT_Property>))]
     private async Task ExportData()
     {
-        if (StockComparision?.SelectedSecondaryStock == null) return;
-
+        if (StockComparision == null || StockComparision.SecondaryStocks.All(s => !s.IsSelected)) return;
+        
         var wb = new XSSFWorkbook();
         var sheet = wb.CreateSheet();
 
         var title =
-            $"{StockComparision.TopStock} 与{StockComparision.SelectedSecondaryStock} {StockDataRetrievers[SelectedStockDataRetrieverIndex].Name}对比表（{StockComparision.KLineIntervals[StockComparision.SelectedKLineIntervalIndex].Name}）";
+            $"{StockComparision.TopStock}&{string.Join('&', StockComparision.SecondaryStocks.Where(s => s.IsSelected).Select(s => s.Data.ToString()))} {StockComparision.KLineIntervals[StockComparision.SelectedKLineIntervalIndex].Name}对比表";
         var titleRow = sheet.CreateRow(0);
         titleRow.CreateCell(0).SetCellValue(title);
         var titleStyle = wb.CreateCellStyle();
@@ -215,11 +253,11 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
         titleStyle.SetFont(titleFont);
         titleRow.GetCell(0).CellStyle = titleStyle;
         sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, 6));
-
+        
         var headerRow = sheet.CreateRow(1);
         headerRow.CreateCell(0).SetCellValue("日期");
-        headerRow.CreateCell(1).SetCellValue(StockComparision.TopStock.Name);
-        headerRow.CreateCell(2).SetCellValue(StockComparision.SelectedSecondaryStock.Name);
+        headerRow.CreateCell(1).SetCellValue("参照股");
+        headerRow.CreateCell(2).SetCellValue("对比股");
         headerRow.CreateCell(3).SetCellValue("差值");
         headerRow.CreateCell(4).SetCellValue("参照股走势");
         headerRow.CreateCell(5).SetCellValue("对比股走势");
@@ -227,7 +265,7 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
         sheet.SetAutoFilter(new CellRangeAddress(1, 1, 0, 6));
         
         sheet.CreateFreezePane(0, 2);
-
+        
         var rowNumber = 2;
         var dateTimeFormatString = GetDateTimeFormatString(StockComparision.SelectedKLineInterval);
         var dataRetriever = StockDataRetrievers[Math.Clamp(
@@ -236,50 +274,43 @@ public partial class StockComparisionViewModel(IKLinesDataSource kLinesDataSourc
         {
             var row = sheet.CreateRow(rowNumber++);
             row.CreateCell(0).SetCellValue(kLineBarItem.DateTime.ToString(dateTimeFormatString));
-
-            row.CreateCell(1).SetCellValue((double)dataRetriever.Data(kLineBarItem.TopKLine));
+        
+            row.CreateCell(1).SetCellValue((double)dataRetriever.Data.Getter(kLineBarItem.TopKLine));
             row.CreateCell(2).SetCellValue(
                 kLineBarItem.SecondaryKLine == null
                     ? double.NaN
-                    : (double)dataRetriever.Data(kLineBarItem.SecondaryKLine));
+                    : (double)dataRetriever.Data.Getter(kLineBarItem.SecondaryKLine));
             row.CreateCell(3).SetCellFormula($"C{rowNumber}-B{rowNumber}");
             
             row.CreateCell(4).SetCellFormula($"IF(SIGN(B{rowNumber})>0, \"上涨\", IF(SIGN(B{rowNumber})<0, \"下跌\", \"平盘\"))");
             row.CreateCell(5).SetCellFormula($"IF(SIGN(C{rowNumber})>0, \"上涨\", IF(SIGN(C{rowNumber})<0, \"下跌\", \"平盘\"))");
             row.CreateCell(6).SetCellFormula($"IF(SIGN(B{rowNumber})=SIGN(C{rowNumber}), \"同\", \"异\")");
         }
-
+        
         var columnWidths = new[] { 20, 12, 12, 12, 12, 12, 12 };
         for (var i = 0; i < 7; i++)
         {
             sheet.SetColumnWidth(i, columnWidths[i] * 256);
         }
-
-        try
-        {
-            var storageFile = await MainWindow.Current.StorageProvider.SaveFilePickerAsync(
-                new FilePickerSaveOptions
-                {
-                    DefaultExtension = ".xlsx",
-                    FileTypeChoices =
-                    [
-                        new FilePickerFileType("Excel 工作簿")
-                        {
-                            Patterns = [".xlsx"]
-                        }
-                    ],
-                    ShowOverwritePrompt = true,
-                    SuggestedFileName = title,
-                    Title = "选择保存路径"
-                });
-            if (storageFile == null) return;
-
-            await using var fs = await storageFile.OpenWriteAsync();
-            wb.Write(fs);
-        }
-        catch (Exception e)
-        {
-            throw;
-        }
+        
+        var storageFile = await MainWindow.Current.StorageProvider.SaveFilePickerAsync(
+            new FilePickerSaveOptions
+            {
+                DefaultExtension = ".xlsx",
+                FileTypeChoices =
+                [
+                    new FilePickerFileType("Excel 工作簿")
+                    {
+                        Patterns = [".xlsx"]
+                    }
+                ],
+                ShowOverwritePrompt = true,
+                SuggestedFileName = title,
+                Title = "选择保存路径"
+            });
+        if (storageFile == null) return;
+        
+        await using var fs = await storageFile.OpenWriteAsync();
+        wb.Write(fs);
     }
 }

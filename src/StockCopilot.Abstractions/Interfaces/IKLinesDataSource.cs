@@ -6,6 +6,7 @@ namespace StockCopilot.Abstractions.Interfaces;
 public interface IKLinesDataSource
 {
     ValueTask<IReadOnlyList<KLine>> GetKLinesAsync(
+        string market,
         string code,
         DateTime begin,
         DateTime end,

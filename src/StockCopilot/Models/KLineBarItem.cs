@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Avalonia.Media;
 using StockCopilot.Abstractions.Models;
 
@@ -31,5 +32,14 @@ public class KLineBarItem(KLine topKLine, KLine? secondaryKLine, string dateTime
         
     public Color Color { get; set; }
 
-    public override string ToString() => $"数值：{Value}\n日期：{DateTime.ToString(dateTimeFormatString)}";
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("数值：").Append(Value).Append("\n日期：").Append(DateTime.ToString(dateTimeFormatString));
+        if (SecondaryKLine == null)
+        {
+            sb.Append("\n对比股票当日无数据");
+        }
+        return sb.ToString();
+    }
 }

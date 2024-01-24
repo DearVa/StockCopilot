@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -21,6 +20,7 @@ namespace StockCopilot.ViewModels;
 
 public partial class MainViewModel : BusyViewModelBase
 {
+    private readonly IKeyValueStorage keyValueStorage;
     private readonly StockComparisionViewModel stockComparisionViewModel;
     private readonly MaterialTheme materialTheme;
 
@@ -28,8 +28,11 @@ public partial class MainViewModel : BusyViewModelBase
         StockComparisionViewModel stockComparisionViewModel,
         MaterialTheme materialTheme)
     {
+        this.keyValueStorage = keyValueStorage;
         this.stockComparisionViewModel = stockComparisionViewModel;
         this.materialTheme = materialTheme;
+        
+        materialTheme.BaseTheme = keyValueStorage.Read(nameof(UseDarkMode)) is "1" ? BaseThemeMode.Dark : BaseThemeMode.Light;
 
         var stockComparisionCollectionJson = keyValueStorage.Read(nameof(StockComparisionCollection));
         if (stockComparisionCollectionJson != null)
@@ -101,7 +104,11 @@ public partial class MainViewModel : BusyViewModelBase
     public bool UseDarkMode
     {
         get => materialTheme.BaseTheme == BaseThemeMode.Dark;
-        set => materialTheme.BaseTheme = value ? BaseThemeMode.Dark : BaseThemeMode.Light;
+        set
+        {
+            materialTheme.BaseTheme = value ? BaseThemeMode.Dark : BaseThemeMode.Light;
+            keyValueStorage.Save(nameof(UseDarkMode), value ? "1" : "0");
+        }
     }
 
     public ObservableCollection<StockComparision> StockComparisionCollection { get; } = [];
@@ -132,16 +139,7 @@ public partial class MainViewModel : BusyViewModelBase
         if (SelectedStockComparision == null) return;
         var stock = await EditStock("添加对比股", null);
         if (stock == null) return;
-        SelectedStockComparision.SecondaryStocks.Insert(
-            Math.Clamp(
-                SelectedStockComparision.SelectedSecondaryStockIndex + 1,
-                0,
-                SelectedStockComparision.SecondaryStocks.Count),
-            stock);
-        if (SelectedStockComparision.SelectedSecondaryStockIndex == -1)
-        {
-            SelectedStockComparision.SelectedSecondaryStockIndex = 0;
-        }
+        SelectedStockComparision.SecondaryStocks.Add(new SelectableStock(stock.Name, stock));
     }
 
     public static async Task<Stock?> EditStock(string header, string? code)
@@ -172,7 +170,7 @@ public partial class MainViewModel : BusyViewModelBase
 
         if (result.GetResult != "ok") return null;
         if (stockSearchSuggestBox.SelectedStockSearchSuggest is not { } selectedStockSearchSuggest) return null;
-        return new Stock(selectedStockSearchSuggest.OuterCode, selectedStockSearchSuggest.ShortName);
+        return selectedStockSearchSuggest;
     }
 
     [JsonSerializable(typeof(ObservableCollection<StockComparision>))]

@@ -3,7 +3,6 @@
         xmlns:v="clr-namespace:StockCopilot.Views"
         xmlns:di="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
         x:Class="StockCopilot.Views.MainWindow"
-        FontFamily="宋体,Simsun,微软雅黑,Microsoft YaHei,苹方-简,宋体-简"
         Title="股票小助手"
         Width="1600" Height="700">
 

@@ -29,7 +29,7 @@
     <ItemGroup>
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Markup.Xaml.Loader" Version="$(AvaloniaVersion)" />
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="HotAvalonia" Version="1.0.1" />
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="HotAvalonia.Extensions" Version="1.0.1" PrivateAssets="All" />
+        <PackageReference Include="HotAvalonia.Extensions" Version="1.0.1" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

@@ -7,6 +7,8 @@ namespace StockCopilot.ViewModels;
 
 public partial class BusyViewModelBase : ObservableObject
 {
+    [ObservableProperty] private bool isBusy;
+    
     private Task? runningTask, enqueueTask;
     
     /// <summary>
@@ -18,30 +20,39 @@ public partial class BusyViewModelBase : ObservableObject
     protected async Task ExecuteBusyAction(Func<Task> action)
     {
         Dispatcher.UIThread.VerifyAccess();
-        
-        if (runningTask == null)
-        {
-            runningTask = action();
-        }
-        else
-        {
-            enqueueTask = action();
-        }
+
+        IsBusy = true;
 
         try
         {
-            await runningTask;
+            if (runningTask == null)
+            {
+                runningTask = action();
+            }
+            else
+            {
+                enqueueTask = action();
+            }
+
+            try
+            {
+                await runningTask;
+            }
+            finally
+            {
+                runningTask = enqueueTask;
+                enqueueTask = null;
+            }
+
+            if (runningTask != null)
+            {
+                await runningTask;
+                runningTask = null;
+            }
         }
         finally
         {
-            runningTask = enqueueTask;
-            enqueueTask = null;
-        }
-        
-        if (runningTask != null)
-        {
-            await runningTask;
-            runningTask = null;
+            IsBusy = false;
         }
     }
 }

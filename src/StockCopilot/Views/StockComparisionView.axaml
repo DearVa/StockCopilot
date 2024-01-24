@@ -127,15 +127,14 @@
         <Setter Property="Template">
             <ControlTemplate
                 x:DataType="vm:StockComparisionViewModel">
-                <Grid RowDefinitions="Auto,Auto,*,Auto">
-
-                    <ma:ColorZone
-                        Grid.Row="0">
-
-                    </ma:ColorZone>
+                <Grid RowDefinitions="4,Auto,*,Auto">
+                    <ProgressBar
+                        Grid.Row="0"
+                        IsIndeterminate="True"
+                        IsVisible="{Binding IsBusy}"/>
 
                     <Grid
-                        Row="1"
+                        Row="1" Margin="0,8,0,0"
                         ColumnDefinitions="*,Auto">
 
                         <ma:Card
@@ -203,7 +202,7 @@
 
                     <Grid
                         Row="3"
-                        ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+                        ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto">
 
                         <TextBlock
                             Grid.Column="0"
@@ -222,7 +221,7 @@
                             Grid.Column="2"
                             Margin="16,0,8,0"
                             VerticalAlignment="Center"
-                            Text="可视化方式"/>
+                            Text="过滤器"/>
                         <ComboBox
                             Grid.Column="3"
                             Classes="Filled"
@@ -239,23 +238,49 @@
                                 Width="24" Height="24"/>
                             <ToolTip.Tip>
                                 <TextBlock>
-                                    <Run Text="绝对值：直接用对比股减去参照股，不考虑走势"/>
+                                    <Run Text="所有：不考虑走势"/>
                                     <LineBreak/>
-                                    <Run Text="不同走势：只显示相对股的走势和参照股走势不同的数值"/>
+                                    <Run Text="不同走势：只显示对比股的走势和参照股走势不同的数值"/>
                                     <LineBreak/>
-                                    <Run Text="不同走势（红）：只显示相对股数值为正数，参照股数值为负数的情况"/>
+                                    <Run Text="不同走势（红）：只显示对比股数值为正数，参照股数值为负数或0的情况"/>
                                     <LineBreak/>
-                                    <Run Text="不同走势（绿）：只显示相对股数值为负数，参照股数值为正数的情况"/>
+                                    <Run Text="不同走势（绿）：只显示对比股数值为负数，参照股数值为正数或0的情况"/>
                                 </TextBlock>
                             </ToolTip.Tip>
                         </Border>
                         
                         <ma:FloatingButton
-                            Grid.Column="5"
-                            Margin="16"
-                            HorizontalAlignment="Right"
+                            Grid.Column="6"
+                            Margin="0,16"
                             VerticalAlignment="Center"
                             IsExtended="True"
+                            IsEnabled="{Binding IsBusy, Converter={x:Static BoolConverters.Not}}"
+                            Command="{Binding UpdatePlot}">
+                            <StackPanel
+                                Orientation="Horizontal" Height="24">
+                                <Viewbox
+                                    Margin="4,0,0,0"
+                                    Stretch="Fill"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                    <ic:MaterialIcon
+                                        Kind="Refresh"
+                                        Width="24" Height="24"/>
+                                </Viewbox>
+                                <TextBlock
+                                    Margin="8,0"
+                                    Classes="Subtitle2"
+                                    VerticalAlignment="Center"
+                                    Text="刷新"/>
+                            </StackPanel>
+                        </ma:FloatingButton>
+                        
+                        <ma:FloatingButton
+                            Grid.Column="7"
+                            Margin="16"
+                            VerticalAlignment="Center"
+                            IsExtended="True"
+                            IsEnabled="{Binding IsBusy, Converter={x:Static BoolConverters.Not}}"
                             Command="{Binding ExportDataCommand}">
                             <StackPanel
                                 Orientation="Horizontal" Height="24">
