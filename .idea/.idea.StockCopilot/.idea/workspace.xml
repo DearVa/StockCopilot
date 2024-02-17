@@ -16,37 +16,15 @@
   <component name="ChangeListManager">
     <list default="true" id="0f526459-055e-4897-a974-767a94570a13" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.StockCopilot/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.StockCopilot/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Interfaces/IKLinesDataSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Interfaces/IKLinesDataSource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Interfaces/IStockSearchSuggestProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Interfaces/IStockSearchSuggestProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Extensions/StringExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Extensions/StringExtension.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/KLine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/KLine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/Stock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/Stock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/StockSearchSuggest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Abstractions/StockCopilot.Abstractions.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Abstractions/StockCopilot.Abstractions.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core.Tests/KLinesDataSourceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core.Tests/KLinesDataSourceTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/JsonSerializerContexts/EasyMoneyJsonSerializerContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/JsonSerializerContexts/EasyMoneyJsonSerializerContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Models/HttpContrasts/EastMoney/GetSearchSuggestsResponse.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Models/HttpContrasts/EastMoney/GubaCodeTable.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Models/HttpContrasts/EastMoney/KLineResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/Models/HttpContrasts/EastMoney/KLineResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyKLinesDataSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyKLinesDataSource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyStockSearchSuggestProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyStockSearchSuggestProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Desktop/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Desktop/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/App.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyKLinesDataSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyOnlineKLinesDataSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StockCopilot.Core/StockCopilot.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot.Core/StockCopilot.Core.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StockCopilot/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/App.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Models/KLineBarItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Models/KLineBarItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Models/SelectableItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Models/SelectableItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Models/StockComparision.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Models/StockComparision.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Models/StockComparisionMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Models/StockComparisionMode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StockCopilot/Models/StockDataRetriever.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Models/StockDataRetriever.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/StockCopilot.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/StockCopilot.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/ViewModels/BusyViewModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/ViewModels/BusyViewModelBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/ViewModels/MainViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/ViewModels/MainViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/ViewModels/StockComparisionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/ViewModels/StockComparisionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/ViewModels/StockSearchSuggestBoxViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/ViewModels/StockSearchSuggestBoxViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/KLineBarPlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/KLineBarPlot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/Controls/StockSearchSuggestBox.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/MainView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/MainView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/MainView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/MainView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/MainWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StockCopilot/Views/StockComparisionView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/StockCopilot/Views/StockComparisionView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,9 +46,13 @@
     <option name="projectConfigVersion" value="5" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.nuget/packages/hotavalonia.extensions/1.0.1/contentFiles/cs/netstandard2.1/AvaloniaHotReloadExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/IO/BinaryReader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/IO/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/IO/UnmanagedMemoryAccessor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/IO/UnmanagedMemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/Runtime/InteropServices/SafeBuffer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Private.CoreLib/src/System/Runtime/InteropServices/SafeHandle.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.Configuration.FileExtensions/src/FileConfigurationSource.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.Configuration.Json/src/JsonConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.Configuration.Json/src/JsonConfigurationSource.cs" root0="SKIP_HIGHLIGHTING" />
@@ -79,6 +61,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/8f4568cdaa2f9654fd133a17cd2dcc55b5f42455/src/libraries/System.Private.CoreLib/src/System/Resources/ResourceManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/coreclr/System.Private.CoreLib/src/System/Object.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.ObjectModel/src/System/Collections/ObjectModel/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Collections/ObjectModel/Collection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/IO/File.cs" root0="SKIP_HIGHLIGHTING" />
@@ -87,6 +70,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Range.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/AsyncValueTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Threading/Timer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Text.Json/src/System/Text/Json/Serialization/JsonConverterFactory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/130bce842b65472697041ff5d9ab715a12800/78/34debf29/CompiledBindingExtension.cs" root0="SKIP_HIGHLIGHTING" />
@@ -102,7 +86,11 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4081939150374df08a07a87a6d2002911ac800/f1/ce6cb795/ObjectConverters.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/04/84862887/Collection`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/50/61409d91/IList`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/72/4e36c32d/CancellationToken.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/79/6d12bf09/Decimal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/93/6ecbf1d3/Stream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/cf/96f5d11c/UnmanagedMemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/477b4e826ead4ecf86f19cf2ddbb4649c8f910/f4/3cb268d9/BinaryReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/499db521219e45f68fd437275a961c5310800/25/b4c7d257/DialogHost.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5b1c7140a80f43a297fcb6f48e30af771cc00/31/9b170ac0/DialogWindowBase`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5b1c7140a80f43a297fcb6f48e30af771cc00/83/b497ceed/CustomDialogViewModel.cs" root0="SKIP_HIGHLIGHTING" />
@@ -165,7 +153,7 @@
     <setting file="file://$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/KLine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/StockCopilot.Abstractions/Models/Stock.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/StockCopilot.Core/JsonSerializerContexts/EasyMoneyJsonSerializerContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyKLinesDataSource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyOnlineKLinesDataSource.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyStockSearchSuggestProvider.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -187,8 +175,11 @@
   &quot;keyToString&quot;: {
     &quot;.NET 启动设置配置文件.StockCopilot.Browser.executor&quot;: &quot;Debug&quot;,
     &quot;.NET 项目.StockCopilot.Desktop.executor&quot;: &quot;Debug&quot;,
+    &quot;0f41420c-8b1f-41f1-b004-fbe9f0b2f955.executor&quot;: &quot;Debug&quot;,
+    &quot;489ddda7-4a7e-4a52-bdbf-4b232f2e5b20.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;b1d24055-5662-4bd2-9e26-fe771e241928.executor&quot;: &quot;Debug&quot;,
     &quot;fbffd08d-3cf4-48c0-bacf-d8eeb7f435a5.executor&quot;: &quot;Debug&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -314,6 +305,10 @@
       <workItem from="1705985533801" duration="4304000" />
       <workItem from="1706077341792" duration="13040000" />
       <workItem from="1706093073775" duration="1056000" />
+      <workItem from="1706688730323" duration="11814000" />
+      <workItem from="1708054463620" duration="6287000" />
+      <workItem from="1708140939121" duration="6158000" />
+      <workItem from="1708155317169" duration="7241000" />
     </task>
     <task id="LOCAL-00001" summary="0.0.1">
       <option name="closed" value="true" />
@@ -357,7 +352,49 @@
           </properties>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/src/StockCopilot.Core.Tests/KLinesDataSourceTests.cs</url>
+          <line>39</line>
+          <properties documentPath="G:\Source\CSharp\StockCopilot\src\StockCopilot.Core.Tests\KLinesDataSourceTests.cs" initialLine="39" containingFunctionPresentation="方法 'EastMoneyOfflineKLinesDataSourceTest'">
+            <startOffsets>
+              <option value="1429" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1430" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/src/StockCopilot.Core.Tests/KLinesDataSourceTests.cs</url>
+          <line>20</line>
+          <properties documentPath="G:\Source\CSharp\StockCopilot\src\StockCopilot.Core.Tests\KLinesDataSourceTests.cs" initialLine="20" containingFunctionPresentation="方法 'EastMoneyOnlineKLinesDataSourceTest'">
+            <startOffsets>
+              <option value="658" />
+            </startOffsets>
+            <endOffsets>
+              <option value="692" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/src/StockCopilot.Core/Services/EastMoneyOfflineKLinesDataSource.cs</url>
+          <line>222</line>
+          <properties documentPath="G:\Source\CSharp\StockCopilot\src\StockCopilot.Core\Services\EastMoneyOfflineKLinesDataSource.cs" initialLine="217" containingFunctionPresentation="方法 'GetKLinesAsync'">
+            <startOffsets>
+              <option value="9535" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9581" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="DotNet Exception Breakpoints" />
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

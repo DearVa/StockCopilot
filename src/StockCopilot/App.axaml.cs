@@ -28,7 +28,7 @@ public class App : Application
             // Services
             .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddJsonFile("appsettings.json", true).Build())
             .AddSingleton<IKeyValueStorage, JsonKeyValueStorage>()
-            .AddSingleton<IKLinesDataSource, EastMoneyKLinesDataSource>()
+            .AddSingleton<IKLinesDataSource, EastMoneyOnlineKLinesDataSource>()
             .AddSingleton<IStockSearchSuggestProvider, EastMoneyStockSearchSuggestProvider>()
             // ViewModels
             .AddSingleton<StockComparisionViewModel>()

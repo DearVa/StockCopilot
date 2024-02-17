@@ -2,5 +2,5 @@
 
 namespace StockCopilot.Models;
 
-public class StockComparisionMode(string name, Func<decimal, decimal, decimal> data) : 
-    SelectableItem<Func<decimal, decimal, decimal>>(name, data);
+public class StockComparisionMode(string name, Func<float, float, float> data) : 
+    SelectableItem<Func<float, float, float>>(name, data);

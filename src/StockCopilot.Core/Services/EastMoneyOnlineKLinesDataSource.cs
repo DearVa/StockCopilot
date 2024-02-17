@@ -6,11 +6,14 @@ using StockCopilot.Abstractions.Extensions;
 using StockCopilot.Abstractions.Interfaces;
 using StockCopilot.Abstractions.Models;
 using StockCopilot.Core.JsonSerializerContexts;
-using StockCopilot.Core.Models.HttpContrasts.EastMoney;
 
 namespace StockCopilot.Core.Services;
 
-public class EastMoneyKLinesDataSource(IConfiguration configuration) : IKLinesDataSource
+/// <summary>
+/// HTTP请求获取数据
+/// </summary>
+/// <param name="configuration"></param>
+public class EastMoneyOnlineKLinesDataSource(IConfiguration configuration) : IKLinesDataSource
 {
     private readonly HttpClient httpClient = new();
 
@@ -28,7 +31,7 @@ public class EastMoneyKLinesDataSource(IConfiguration configuration) : IKLinesDa
         TimeSpan interval,
         AdjustmentType adjustmentType = AdjustmentType.None)
     {
-        var baseUrl = configuration.GetSection(nameof(EastMoneyKLinesDataSource))["BaseUrl"] ?? DefaultBaseUrl;
+        var baseUrl = configuration.GetSection(nameof(EastMoneyOnlineKLinesDataSource))["BaseUrl"] ?? DefaultBaseUrl;
         var urlBuilder = new StringBuilder(baseUrl)
             .Append("?fqt=").Append(adjustmentType switch
             {
